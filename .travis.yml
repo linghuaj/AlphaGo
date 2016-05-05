@@ -13,8 +13,11 @@ before_install:
   - sudo ln -s /run/shm /dev/shm
 # Install packages
 install:
-  - conda install --yes python=2.7 numpy scipy matplotlib pandas pytest h5py
-  - pip install --user --no-deps Keras==0.3.1 -e git://github.com/Theano/Theano.git#egg=Theano
+  - conda install --yes python=2.7 Cython=0.24 h5py=2.6.0 numpy=1.11.0 scipy=0.17.0 PyYAML=3.11 matplotlib pandas pytest
+  - pip install --user --no-deps Theano==0.8.1 sgf==0.5 keras==1.0.0 pygtp==0.2
+  - pip install --user flake8
 
-# run unit tests
-script: python -m unittest discover
+# run flake8 and unit tests
+script:
+    - flake8
+    - THEANO_FLAGS="gcc.cxxflags='-march=core2'" python -m unittest discover
